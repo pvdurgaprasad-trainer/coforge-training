@@ -1,0 +1,10 @@
+<p style="color: red;" *ngIf="isError==true">{{errorMsg}}</p>
+<div *ngIf="isError==false">
+    <table>
+        <tr *ngFor="let book of books">
+            <td>{{book.bookId}}</td>
+            <td>{{book.title}}</td>
+            <td>{{book.author}}</td>
+        </tr>
+    </table>
+</div>
