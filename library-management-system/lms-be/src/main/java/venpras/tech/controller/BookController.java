@@ -1,31 +1,58 @@
 package venpras.tech.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import venpras.tech.dto.BookDTO;
-import venpras.tech.enums.BookStatus;
-import venpras.tech.exceptions.NoBooksAvailableException;
-import venpras.tech.service.BookService;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import venpras.tech.dto.BookDTO;
+import venpras.tech.exceptions.NoBooksAvailableException;
+import venpras.tech.exceptions.NoRequestsAvailableException;
+import venpras.tech.service.BookService;
+
 @RestController
-@RequestMapping("/api/v1/books")
+@RequestMapping("/api")
 public class BookController {
 
     @Autowired
     public BookService bookService;
 
-    @GetMapping("/")
-    public ReponseData fetchBooks(){
-        ReponseData response = new ReponseData();
+    @GetMapping("/books")
+    public ResponseData fetchBooks(){
+        ResponseData response = new ResponseData();
         try{
             List<BookDTO> books = bookService.getBooks();
             response.setStatus("Success");
             response.setData(books);
         } catch (NoBooksAvailableException e) {
+            response.setStatus("Failed");
+            response.setData(e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/requests")
+    public ResponseData fetchBookRequests(){
+        ResponseData response = new ResponseData();
+        try{
+            List<StudentRequestDTO> books = bookService.getStudentBookRequests();
+            response.setStatus("Success");
+            response.setData(books);
+        } catch (NoRequestsAvailableException e) {
+            response.setStatus("Failed");
+            response.setData(e.getMessage());
+        }
+        return response;
+    }
+    
+    @PostMapping("/student/request")
+    public ResponseData addStudentRequests(@RequestBody BookRequest bookRequest) {
+    	ResponseData response = new ResponseData();
+        try{
+            String message = bookService.requestBooks(bookRequest.studentId,bookRequest.bookIds);
+            response.setStatus("Success");
+            response.setMessage(message);
+        } catch (Exception e) {
             response.setStatus("Failed");
             response.setData(e.getMessage());
         }

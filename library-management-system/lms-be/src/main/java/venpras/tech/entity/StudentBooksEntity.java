@@ -7,14 +7,14 @@ import venpras.tech.enums.BookStatus;
 @Entity
 @Table(name = "student_books")
 @Data
-public class StudentBooks {
-    @Id
-    private String sbId;
+public class StudentBooksEntity extends BaseEntity{
 
-    private String studId;
+    private Long studId;
 
-    private String bookId;
+    private Long bookId;
 
     @Enumerated(EnumType.STRING)
     private BookStatus status;
+
+    private String comment;
 }
