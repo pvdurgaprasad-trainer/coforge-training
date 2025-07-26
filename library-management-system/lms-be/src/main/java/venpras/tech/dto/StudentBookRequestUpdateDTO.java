@@ -1,9 +1,9 @@
-package venpras.tech.controller;
+package venpras.tech.dto;
 
 import lombok.Data;
 
 @Data
-public class StudentRequestDTO {
+public class StudentBookRequestUpdateDTO {
     private String student;
     private String book;
     private String status;

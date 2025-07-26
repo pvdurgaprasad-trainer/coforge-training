@@ -39,7 +39,7 @@ export class App {
     var books:any = [];
     this.selectedBooks.forEach(e=>books=[...books,e]);
     let request:any = {
-      "studentId":123,
+      "studentId":50,
       "bookIds": books
     };
     this.bookService.postRequest(request).subscribe();

@@ -1,10 +1,10 @@
-package venpras.tech.controller;
+package venpras.tech.dto;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class BookRequest {
+public class StudentBookRequestDTO {
     Long studentId; List<Long> bookIds;
 }
