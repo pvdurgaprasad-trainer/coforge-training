@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+ <input type="button" value="getBooks" (click)="showBooks()">
+<div *ngFor="let book of books">
+    <input type="checkbox" value="{{book.id}}" 
+                (change)="addBook($event)"/>
+    {{book.title}}
+    {{book.author}}
+</div>
+<input type="button" value="placeRequest" 
+        (click)="sendRequest()">

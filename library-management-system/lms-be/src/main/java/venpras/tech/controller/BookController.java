@@ -47,7 +47,14 @@ public class BookController {
     
     @PostMapping("/student/request")
     public ResponseData addStudentRequests(@RequestBody BookRequest bookRequest) {
-    	ResponseData response = new ResponseData();
+        System.out.println("studentId-->"+bookRequest.getStudentId());
+        bookRequest.getBookIds().forEach(System.out::println);
+        return null;
+    }
+
+}
+/*
+ResponseData response = new ResponseData();
         try{
             String message = bookService.requestBooks(bookRequest.studentId,bookRequest.bookIds);
             response.setStatus("Success");
@@ -57,6 +64,4 @@ public class BookController {
             response.setData(e.getMessage());
         }
         return response;
-    }
-
-}
+* */
