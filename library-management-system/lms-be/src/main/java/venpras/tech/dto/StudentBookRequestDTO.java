@@ -6,5 +6,6 @@ import java.util.List;
 
 @Data
 public class StudentBookRequestDTO {
-    Long studentId; List<Long> bookIds;
+    Long studentId;
+    List<Long> bookIds;
 }

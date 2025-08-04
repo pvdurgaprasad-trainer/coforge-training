@@ -1,11 +1,10 @@
 package venpras.tech.service;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import venpras.tech.controller.BookRequestUpdateDTO;
+import venpras.tech.dto.BookRequestUpdateDTO;
 import venpras.tech.dto.BookRequestDTO;
-import venpras.tech.dto.StudentBookRequestDTO;
+import venpras.tech.dto.CancelBookRequestDTO;
 import venpras.tech.entity.BookEntity;
 import venpras.tech.entity.StudentBooksEntity;
 import venpras.tech.entity.StudentEntity;
@@ -35,19 +34,19 @@ public class StudentBookRequestService {
     public StudentBooksRepo studentBooksRepo;
 
     public String requestBooks(Long studentId, List<Long> bookIds) throws StudentNotFoundException, InvalidBookException {
-        if(studentId!=null) {
+        if (studentId != null) {
             Optional<StudentEntity> studentEntity = studentRepo.findById(studentId);
             if (!studentEntity.isPresent()) {
                 throw new StudentNotFoundException("Student not found");
-            } else if(bookIds!=null){
+            } else if (bookIds != null) {
                 List<BookEntity> books = bookRepo.findAllById(bookIds);
-                if(books.size()!=books.size()) {
+                if (books.size() != books.size()) {
                     throw new InvalidBookException("Invalid Books Exception");
-                }else{
+                } else {
                     List<StudentBooksEntity> studentBooks = new ArrayList<>();
-                    for(Long bookId:bookIds){
+                    for (Long bookId : bookIds) {
                         Optional<BookEntity> bookEntity = bookRepo.findById(bookId);
-                        if(bookEntity.isEmpty()){
+                        if (bookEntity.isEmpty()) {
                             StudentBooksEntity entity = new StudentBooksEntity();
                             entity.setBookId(bookEntity.get().getId());
                             entity.setStudId(studentId);
@@ -58,7 +57,7 @@ public class StudentBookRequestService {
                     studentBooksRepo.saveAll(studentBooks);
                 }
             }
-        }else{
+        } else {
             throw new StudentNotFoundException("Student not found");
         }
         return "Student saved successfully";
@@ -66,7 +65,7 @@ public class StudentBookRequestService {
 
     public List<BookRequestDTO> getStudentBookRequests() throws NoRequestsAvailableException {
         List<StudentBooksEntity> bookRequestsEntityList = studentBooksRepo.findAll();
-        if (null!=bookRequestsEntityList && !bookRequestsEntityList.isEmpty()) {
+        if (null != bookRequestsEntityList && !bookRequestsEntityList.isEmpty()) {
             bookRequestsEntityList.forEach(System.out::println);
             List<BookRequestDTO> bookRequests = new ArrayList<>();
             bookRequestsEntityList.forEach(e -> {
@@ -81,21 +80,43 @@ public class StudentBookRequestService {
         }
     }
 
-    public String updateStudentBookRequest(BookRequestUpdateDTO bookRequestUpdate) throws StudentNotFoundException, BookNotFoundException {
-        if(bookRequestUpdate.getStudId()!=null){
-            if(bookRequestUpdate.getBookId()!=null){
-                List<StudentBooksEntity> studentBookRequests = studentBooksRepo.findByStudIdAndBookId(bookRequestUpdate.getStudId(),bookRequestUpdate.getBookId());
-                studentBookRequests.forEach(e->{
-                    e.setStatus(bookRequestUpdate.getStatus());
-                       e.setComment(bookRequestUpdate.getComment());
-                });
-                studentBooksRepo.saveAll(studentBookRequests);
-            }else{
+    public String updateStudentBookRequest(BookRequestUpdateDTO bookRequestUpdate) throws StudentNotFoundException, BookNotFoundException, NoRequestsAvailableException {
+        if (bookRequestUpdate.getStudId() != null) {
+            if (bookRequestUpdate.getBookId() != null) {
+                List<StudentBooksEntity> studentBookRequests = studentBooksRepo.findByStudIdAndBookId(bookRequestUpdate.getStudId(), bookRequestUpdate.getBookId());
+                if(studentBookRequests!=null&&!studentBookRequests.isEmpty()){
+                    studentBookRequests.forEach(e -> {
+                        e.setStatus(bookRequestUpdate.getStatus());
+                        e.setComment(bookRequestUpdate.getComment());
+                    });
+                    studentBooksRepo.saveAll(studentBookRequests);
+                }else{
+                    throw new NoRequestsAvailableException("No requests available");
+                }
+            } else {
                 throw new BookNotFoundException("Books cannot be empty");
             }
-        }else{
+        } else {
             throw new StudentNotFoundException("Student Id cannot be empty");
         }
-        return null;
+        return "student request updated";
+    }
+
+    public String cancelStudentBookRequest(CancelBookRequestDTO cancelBookRequestDTO) throws StudentNotFoundException, BookNotFoundException, NoRequestsAvailableException {
+        if (cancelBookRequestDTO.getStudId() != null) {
+            if (cancelBookRequestDTO.getBookId() != null) {
+                List<StudentBooksEntity> studentBookRequests = studentBooksRepo.findByStudIdAndBookId(cancelBookRequestDTO.getStudId(), cancelBookRequestDTO.getBookId());
+                if (studentBookRequests != null) {
+                    studentBooksRepo.deleteAll(studentBookRequests);
+                } else {
+                    throw new NoRequestsAvailableException("No Requests Available");
+                }
+            } else {
+                throw new BookNotFoundException("Books cannot be empty");
+            }
+        } else {
+            throw new StudentNotFoundException("Student Id cannot be empty");
+        }
+        return "student request updated";
     }
 }

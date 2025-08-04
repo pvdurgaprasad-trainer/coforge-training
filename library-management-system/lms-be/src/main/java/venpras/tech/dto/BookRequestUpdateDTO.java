@@ -1,4 +1,4 @@
-package venpras.tech.controller;
+package venpras.tech.dto;
 
 import lombok.Data;
 import venpras.tech.enums.BookStatus;
