@@ -25,9 +25,13 @@ public class BookController {
             List<BookDTO> books = bookService.getBooks();
             response.setStatus("Success");
             response.setData(books);
+
         } catch (NoBooksAvailableException e) {
             response.setStatus("Failed");
-            response.setData(e.getMessage());
+            response.setMessage(e.getMessage());
+        }catch (Exception e) {
+            response.setStatus("Failed");
+            response.setMessage(e.getMessage());
         }
         return response;
     }
