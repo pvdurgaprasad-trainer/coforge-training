@@ -11,17 +11,17 @@ function Login() {
 
     const auth = useAuth();
     const handleLogin = () => {
-        var data = {
-            'username': username,
-            'password': password
-        }
         if (username === password && username === 'admin') {
-            auth.setUsername(data.username);
+            auth.setUsername(username);
             auth.setRole('librarian');
+            sessionStorage.setItem('username',username);
+            sessionStorage.setItem('role','librarian')
             navigate('/librarian');
         } else {
-            auth.setUsername(data.username);
-            auth.setRole('customer');
+            auth.setUsername(username);
+            auth.setRole('customer');            
+            sessionStorage.setItem('username',username);
+            sessionStorage.setItem('role','customer')
             navigate('/customer');
         }
     }

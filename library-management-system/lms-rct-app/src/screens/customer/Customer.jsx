@@ -1,8 +1,9 @@
 import React from 'react';
 
 function Customer() {
+    const username = sessionStorage.getItem('username');
     return (
-        <div>This is customer</div>
+        <div>welcome Customer {username}</div>
     );
 }
 
