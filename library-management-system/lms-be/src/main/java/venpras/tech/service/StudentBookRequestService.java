@@ -60,7 +60,7 @@ public class StudentBookRequestService {
         } else {
             throw new StudentNotFoundException("Student not found");
         }
-        return "Student saved successfully";
+        return "Student request saved successfully";
     }
 
     public List<BookRequestDTO> getStudentBookRequests() throws NoRequestsAvailableException {
