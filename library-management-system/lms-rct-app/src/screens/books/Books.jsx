@@ -8,6 +8,7 @@ function Books() {
     const [books, setBooks] = useState([]);
     const [isError, setIsError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
+    const role = sessionStorage.getItem('role');
 
     function handleSearch() {
         console.log(search);
@@ -38,9 +39,14 @@ function Books() {
                         <Form.Control type="text" placeholder="Book title" value={search}
                             onChange={(e) => setSearch(e.target.value)} />
                         <Button variant="secondary" onClick={handleSearch}>Search</Button></Stack>
-                    <Stack direction="horizontal" gap={3}>
-                        <div className="me-auto"></div>
-                        <Button variant="secondary" onClick={handleSearch}>Request Books</Button></Stack>
+                    {role === 'customer' ?
+                        (<Stack direction="horizontal" gap={3}>
+                            <div className="me-auto"></div>
+                            <Button variant="secondary" onClick={handleSearch}>Request Books</Button></Stack>) :
+                        (<Stack direction="horizontal" gap={3}>
+                            <div className="me-auto"></div>
+                            <Button variant="secondary" onClick={handleSearch}>Edit Books</Button></Stack>)
+                    }
                     <Table striped bordered hover>
                         <thead>
                             <tr>
