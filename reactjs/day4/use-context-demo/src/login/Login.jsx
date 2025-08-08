@@ -11,7 +11,7 @@ export default function Login() {
     const navigate = useNavigate();
     const handleSubmit = () => {
         data.setUser(username);
-        navigate('/customer');
+        navigate('/home');
     }
     return (
         <div>
