@@ -11,6 +11,7 @@ export default function Login() {
     const navigate = useNavigate();
     const handleSubmit = () => {
         data.setUser(username);
+        data.setBgColor('red');
         navigate('/home');
     }
     return (

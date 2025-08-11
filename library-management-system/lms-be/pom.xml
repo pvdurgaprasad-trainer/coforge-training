@@ -70,6 +70,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+        <finalName>lms-be</finalName>
 	</build>
 
 </project>

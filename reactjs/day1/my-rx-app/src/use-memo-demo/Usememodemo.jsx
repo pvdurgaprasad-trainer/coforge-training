@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useState } from 'react';
 
 export default function Usememodemo() {
@@ -16,9 +15,8 @@ export default function Usememodemo() {
     }
     console.log('factorial-->' + result);
   }
-  // const showfact = fact(counter);
+  const showfact = fact(counter);
   // const showfact = useMemo(()=>{fact(counter)},[counter]);
-    const showfact = useCallback(()=>{fact(counter)},[counter]);
   return (
     <div>
       <input type="button" value="+" onClick={incremenet} />

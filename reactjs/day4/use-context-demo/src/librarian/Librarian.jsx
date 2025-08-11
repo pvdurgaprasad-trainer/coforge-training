@@ -5,6 +5,6 @@ import { UserContext } from '../App';
 export default function Librarian() {
   const data = useContext(UserContext);
     return (
-      <div>{data.user}</div>
+      <div style={{backgroundColor:data.bgColor}}>{data.user}</div>
     )
 }

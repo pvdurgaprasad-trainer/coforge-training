@@ -11,9 +11,10 @@ export const UserContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState('');
+  const [bgColor,setBgColor] = useState('yellow');
   return (
     <div>      
-      <UserContext.Provider value={{user,setUser}}>
+      <UserContext.Provider value={{user,setUser,bgColor,setBgColor}}>
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login/>}/>
