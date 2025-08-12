@@ -9,4 +9,5 @@ spec:
     - protocol: "TCP"
       port: 7070 # The port that the service is running on in the cluster
       targetPort: 7070 # The port exposed by the service
+      nodePort: 32761
   type: NodePort # type of the service.
