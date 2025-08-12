@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: lms-rct-app-dep
+spec:
+  selector:
+    matchLabels:
+      app: lms-rct-app
+  replicas: 2 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: lms-rct-app
+    spec:
+      containers:
+        - name: lms-rct-app
+          image: pvdurgaprasadtrainer/lms-rct-app:1.0 # Image that will be used to containers in the cluster
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5173 # The port that the container is running on in the cluster
