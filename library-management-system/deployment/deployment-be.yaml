@@ -15,6 +15,6 @@ spec:
       containers:
         - name: lms-be
           image: pvdurgaprasadtrainer/lms-be:latest # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 7070 # The port that the container is running on in the cluster

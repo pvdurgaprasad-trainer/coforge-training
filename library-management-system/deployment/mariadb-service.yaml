@@ -6,10 +6,10 @@ metadata:
     app: mariadb
 spec:
   ports:
-    - port: 3306
+    - protocol: "TCP"
+      port: 3306
       targetPort: 3306
       nodePort: 32760
-      name: mariadb
   type: NodePort
   selector:
     app: mariadb
